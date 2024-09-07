@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:recognition/home.dart';
 import 'package:recognition/objectDetectionPage.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: ObjectDetectionPage(cameras:cameras),
+      home: Home(cameras:cameras),
+      //home: ObjectDetectionPage(cameras:cameras),
     );
   }
 }

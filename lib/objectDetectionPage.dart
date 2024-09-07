@@ -53,6 +53,7 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
               _recognitions = recognitions;
               if (_recognitions != null && _recognitions!.isNotEmpty) {
                 _detectedObjectName = _recognitions![0]['label'];
+                //_detectedObjectName = _recognitions![0]['label']+' '+_recognitions![0]['confidence'];
               }
               _imageWidth = img.width;
               _imageHeight = img.height;
@@ -75,8 +76,22 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
 
   @override
   void dispose() {
-    _cameraController.dispose();
-    Tflite.close();
+    // Detener el flujo de la cámara antes de liberar recursos
+    if (_cameraController.value.isStreamingImages) {
+      _cameraController.stopImageStream().catchError((error) {
+        print('Error al detener el flujo de imágenes: $error');
+      });
+    }
+
+    _cameraController.dispose().catchError((error) {
+      print('Error al liberar recursos de la cámara: $error');
+    });
+
+    // Liberar los recursos de TensorFlow Lite
+    Tflite.close().catchError((error) {
+      print('Error al cerrar TensorFlow Lite: $error');
+    });
+
     super.dispose();
   }
 
