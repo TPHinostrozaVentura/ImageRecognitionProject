@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
+import 'package:torch_light/torch_light.dart';
 
 class ObjectDetectionPage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -18,6 +19,7 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
   String? _detectedObjectName = '';
   int _imageWidth = 0;
   int _imageHeight = 0;
+  bool _isFlashOn = false;
 
   @override
   void initState() {
@@ -74,6 +76,22 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
     );
   }
 
+  // Encender o apagar el flash de la cámara
+  Future<void> _toggleFlash() async {
+    try {
+      if (_isFlashOn) {
+        await _cameraController.setFlashMode(FlashMode.off);
+      } else {
+        await _cameraController.setFlashMode(FlashMode.torch);
+      }
+      setState(() {
+        _isFlashOn = !_isFlashOn;
+      });
+    } catch (e) {
+      print("Error al controlar el flash: $e");
+    }
+  }
+
   @override
   void dispose() {
     // Detener el flujo de la cámara antes de liberar recursos
@@ -92,6 +110,20 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
       print('Error al cerrar TensorFlow Lite: $error');
     });
 
+    try {
+      if (_isFlashOn) {
+        _cameraController.setFlashMode(FlashMode.off);
+
+        setState(() {
+          _isFlashOn = !_isFlashOn;
+        });
+
+      }
+
+    } catch (e) {
+      print("Error al controlar el flash: $e");
+    }
+
     super.dispose();
   }
 
@@ -100,6 +132,12 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Object Detection Real-Time'),
+        actions: [
+          IconButton(
+            icon: Icon(_isFlashOn ? Icons.flash_off : Icons.flash_on),
+            onPressed: _toggleFlash,
+          ),
+        ],
       ),
       body: Column(
         children: [
