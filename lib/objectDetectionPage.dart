@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 //import 'package:tflite/tflite.dart';
 import 'package:tflite_v2/tflite_v2.dart';
 
@@ -20,6 +21,10 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
   int _imageWidth = 0;
   int _imageHeight = 0;
   bool _isFlashOn = false;
+
+  String? detectedObjectName = '';
+  String? _previousDetectedObjectName = '';
+  final FlutterTts flutterTts = FlutterTts();
 
   @override
   void initState() {
@@ -55,6 +60,13 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
               _recognitions = recognitions;
               if (_recognitions != null && _recognitions!.isNotEmpty) {
                 _detectedObjectName = _recognitions![0]['label'];
+
+                if (_detectedObjectName != _previousDetectedObjectName) {
+                  detectedObjectName = _detectedObjectName;
+                  _speakDetectedObject(detectedObjectName!); // Solo habla si el objeto ha cambiado
+                  _previousDetectedObjectName = _detectedObjectName; // Actualizar el último objeto detectado
+                }
+
                 //_detectedObjectName = _recognitions![0]['label']+' '+_recognitions![0]['confidence'];
               }
               _imageWidth = img.width;
@@ -74,6 +86,14 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
       labels: 'assets/mobilenet_v1_1.0_224.txt',
       numThreads: 1,
     );
+  }
+
+  // Función para hablar el nombre del objeto detectado
+  Future<void> _speakDetectedObject(String text) async {
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setPitch(1);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.speak(text);
   }
 
   // Encender o apagar el flash de la cámara
