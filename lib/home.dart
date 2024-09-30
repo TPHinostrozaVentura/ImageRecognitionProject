@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
                           height: 140, // Alto del botón
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.black.withOpacity(0.7), // Color gris con opacidad
+                              backgroundColor: Colors.black.withOpacity(0.7), // Color gris con opacidad
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30), // Bordes redondeados
                               ),
@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                           height: 140,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.black.withOpacity(0.7), // Color gris con opacidad
+                              backgroundColor: Colors.black.withOpacity(0.7), // Color gris con opacidad
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),

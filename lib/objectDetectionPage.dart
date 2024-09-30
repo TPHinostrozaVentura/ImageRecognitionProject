@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:tflite/tflite.dart';
-import 'package:torch_light/torch_light.dart';
+//import 'package:tflite/tflite.dart';
+import 'package:tflite_v2/tflite_v2.dart';
 
 class ObjectDetectionPage extends StatefulWidget {
   final List<CameraDescription> cameras;
-  const ObjectDetectionPage({required this.cameras});
+  const ObjectDetectionPage({Key? key, required this.cameras}) : super(key: key);
 
   @override
   State<ObjectDetectionPage> createState() => _ObjectDetectionPageState();
@@ -131,7 +131,7 @@ class _ObjectDetectionPageState extends State<ObjectDetectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Object Detection Real-Time'),
+        //title: const Text('Object Detection Real-Time'),
         actions: [
           IconButton(
             icon: Icon(_isFlashOn ? Icons.flash_off : Icons.flash_on),

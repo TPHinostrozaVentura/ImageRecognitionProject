@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:recognition/home.dart';
-import 'package:recognition/objectDetectionPage.dart';
 import 'package:wakelock/wakelock.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Inicializar cámaras disponibles
+  //Inicializar cámaras disponibles
   final cameras = await availableCameras();
   runApp(MyApp(cameras: cameras));
 }
@@ -21,6 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Wakelock.enable();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
 
