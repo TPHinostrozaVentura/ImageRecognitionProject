@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:recognition/objectDetectionPage.dart';
+import 'package:recognition/useGuide.dart';
 
 class Home extends StatefulWidget {
   //const Home({super.key});
@@ -57,10 +58,18 @@ class _HomeState extends State<Home> {
                             ),
                             onPressed: () {
                               // Acción para Guía de Uso
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) {
+                                return const UserGuide();
+                              },)
+                              );
                             },
                             child: const Text(
                               'Guía de Uso',
-                              style: TextStyle(fontSize: 30), // Texto grande
+                              style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.white,
+                              ), // Texto grande
                             ),
                           ),
                         ),
@@ -79,13 +88,16 @@ class _HomeState extends State<Home> {
                               // Acción para Iniciar
                               Navigator.push(
                                   context, MaterialPageRoute(builder: (context) {
-                                return ObjectDetectionPage(cameras: widget.cameras);
-                              },)
+                                    return ObjectDetectionPage(cameras: widget.cameras);
+                                    },)
                               );
                             },
                             child: const Text(
                               'Iniciar',
-                              style: TextStyle(fontSize: 30),
+                              style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
